@@ -25,8 +25,8 @@ func Init(debugOn bool)  {
 		debugWriter = ioutil.Discard
 	}
 	d = log.New(debugWriter, "[D] ", 0)
-	i = log.New(os.Stdout, "[I] ", log.Ldate | log.Ltime | log.Lshortfile)
-	e = log.New(os.Stderr, "[E] ", log.Ldate | log.Ltime | log.Lshortfile)
+	i = log.New(os.Stdout, "[I] ", log.Ldate | log.Ltime)
+	e = log.New(os.Stderr, "[E] ", log.Ldate | log.Ltime)
 }
 
 func Info(ctx context.Context, format string, v ...interface{}) {
@@ -35,6 +35,10 @@ func Info(ctx context.Context, format string, v ...interface{}) {
 
 func Error(ctx context.Context, format string, v ...interface{}) {
 	e.Printf(getTraceIdPrefix(ctx) + format, v...)
+}
+
+func Fatal(ctx context.Context, format string, v ...interface{}) {
+	e.Fatalf(getTraceIdPrefix(ctx) + format, v...)
 }
 
 func Debug(ctx context.Context, format string, v ...interface{}) {
